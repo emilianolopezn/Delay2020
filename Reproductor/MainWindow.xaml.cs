@@ -44,6 +44,7 @@ namespace Reproductor
         EfectoVolumen efectoVolumen;
         EfectoFadeIn efectoFadeIn;
         EfectoFadeOut efectoFadeOut;
+        EfectoDelay efectoDelay;
 
         public MainWindow()
         {
@@ -130,8 +131,12 @@ namespace Reproductor
                     volume.Volume =
                         (float)(sldVolumen.Value);*/
 
+                    efectoDelay =
+                        new EfectoDelay(reader,
+                            (int)(sldOffsetDelay.Value));
+
                     efectoFadeIn = 
-                        new EfectoFadeIn(reader,
+                        new EfectoFadeIn(efectoDelay,
                             float.Parse(txtFadeInDuracion.Text));
 
                     efectoFadeOut =
@@ -237,6 +242,12 @@ namespace Reproductor
                 /*volume.Volume =
                     (float)(sldVolumen.Value);*/
             }
+        }
+
+        private void sldOffsetDelay_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            lblOffsetDelay.Text =
+                ((int)(sldOffsetDelay.Value)).ToString();
         }
     }
 }
