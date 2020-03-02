@@ -104,6 +104,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="coronavirus.mp3" />
     <Content Include="LA BRISSA las chiquitas.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
