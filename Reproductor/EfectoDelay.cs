@@ -13,6 +13,29 @@ namespace Reproductor
         private ISampleProvider fuente;
 
         private int offsetMiliSegundos;
+        private float ganancia;
+
+        public float Ganancia
+        {
+            get
+            {
+                return ganancia;
+            }
+            set
+            {
+                if (value > 1)
+                {
+                    ganancia = 1.0f;
+                } else if (value < 0)
+                {
+                    ganancia = 0.0f;
+                } else
+                {
+                    ganancia = value;
+                }
+            }
+        }
+
         public int OffsetMilisegundos
         {
             get
@@ -40,10 +63,12 @@ namespace Reproductor
         private int cantidadMuestrasBorradas = 0;
 
 
-        public EfectoDelay(ISampleProvider fuente, int offsetMiliSegundos)
+        public EfectoDelay(ISampleProvider fuente, int offsetMiliSegundos,
+            float ganancia)
         {
             this.fuente = fuente;
-            this.offsetMiliSegundos = offsetMiliSegundos;
+            this.OffsetMilisegundos = offsetMiliSegundos;
+            this.Ganancia = ganancia;
 
             tamañoBuffer = fuente.WaveFormat.SampleRate * 20 * 
                 fuente.WaveFormat.Channels;
@@ -93,6 +118,7 @@ namespace Reproductor
                 for(int i=0; i<read;i++)
                 {
                     buffer[i + offset] +=
+                        ganancia *
                         muestras[
                             (cantidadMuestrasTranscurridas -
                             cantidadMuestrasBorradas) + i
